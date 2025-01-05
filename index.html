@@ -119,16 +119,13 @@
 
 var marker = L.marker([6460, 6530]).addTo(map);
 
+// Bind the popup content to the marker without opening it initially
 marker.bindPopup("<b>FOB</b><br>Pathfinders.");
 
-// Add event listener to open the popup on click, if it's not already open
+// Add event listener to toggle the popup on click
 marker.on('click', function() {
-    // Toggle popup visibility
-    if (marker.isPopupOpen()) {
-        marker.closePopup(); // Close the popup if it's already open
-    } else {
-        marker.openPopup(); // Open the popup if it's closed
-    }
+    // If the popup is closed, open it, otherwise close it
+    marker.togglePopup();
 });
 
 
