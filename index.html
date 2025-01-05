@@ -118,7 +118,13 @@
 
 
 var marker = L.marker([6460, 6530]).addTo(map);
-marker.bindPopup("<b>FOB</b><br>Pathfinders.").openPopup();
+
+marker.bindPopup("<b>FOB</b><br>Pathfinders.");
+
+// Now we add an event listener to open the popup when the marker is clicked
+marker.on('click', function() {
+    marker.openPopup();
+});
 
 
 
