@@ -96,6 +96,11 @@
         zoomControl: false, // Disable zoom control
       });
 
+
+// Add tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+
       const bounds = [
         [0, 0],
         [8000, 8000],
@@ -117,40 +122,26 @@
 <script>
 
 
-var marker = L.marker([6460, 6530]).addTo(map);
+ // Create the marker and set its z-index
+    var marker = L.marker([51.505, -0.09]).addTo(map);
+    marker.setZIndexOffset(10000);  // Set the marker's z-index
 
-// Set the z-index for the marker to bring it forward
-marker.setZIndexOffset(10000);
+    // Bind the popup content
+    marker.bindPopup("<b>FOB</b><br>Pathfinders.", {
+        autoClose: false, // Optional: Prevent the popup from closing when clicking outside
+        closeOnClick: false // Optional: Prevent closing when clicking on the map
+    });
 
-// Bind the popup with a custom z-index
-marker.bindPopup("<b>FOB</b><br>Pathfinders.", {
-    autoClose: false, // Optional: Prevent the popup from closing when clicking outside
-    closeOnClick: false, // Optional: Prevent closing when clicking on the map
-    className: 'custom-popup' // Optional: You can add a custom CSS class
-});
+    // Set the z-index for the popup as well
+    marker.on('popupopen', function() {
+        var popup = marker.getPopup();
+        popup._container.style.zIndex = 10000;  // Set z-index for the popup
+    });
 
-// Add event listener to toggle the popup on click
-marker.on('click', function() {
-    marker.togglePopup();  // Toggle the popup visibility when clicked
-});
-
-// Optionally, set a z-index for the popup after binding
-marker.on('popupopen', function() {
-    var popup = marker.getPopup();
-    popup._container.style.zIndex = 10001;  // Adjust the z-index for the popup
-});
-
-
-
-
-
-
-
-
-     
-
-
-
+    // Add event listener to toggle the popup on click
+    marker.on('click', function() {
+        marker.togglePopup();  // Toggle the popup visibility on marker click
+    });
 
 
 
