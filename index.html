@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathfinders Interactive Map</title>
+
+    <link rel="stylesheet" href="./leaflet@1.7.1.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./map.css" />
+
+    <script src="./leaflet@1.7.1.js"></script>
+    <script src="./map.js" type="module"></script>
+  </head>
+  <body>
+    <div id="body-flex-column">
+      <h1>Pathfinders Interactive Map</h1>
+      <!-- Horizontal Ruler -->
+      <div id="h-ruler-container"><img id="h-ruler" src="./coord-top.jpg" /></div>
+      <!-- Div for the map -->
+      <div id="map-container">
+        <!-- Vertical Ruler -->
+        <div id="v-ruler-container"><img id="v-ruler" src="./coord-left.jpg" /></div>
+        <div id="map"></div>
+      </div>
+    </div>
+    <div id="legend">
+      <h3>Map Legend</h3>
+      <ul>
+        <!-- Friendly Territory -->
+        <li>
+          <span class="legend-item" style="background-color: blue; opacity: 0.3"></span>
+          Friendly Territory
+        </li>
+
+        <!-- Unconfirmed Territory -->
+        <li>
+          <span class="legend-item" style="background-color: grey; opacity: 0.3"></span>
+          Unconfirmed Territory
+        </li>
+
+        <!-- Hostile Territory -->
+        <li>
+          <span class="legend-item" style="background-color: red; opacity: 0.3"></span>
+          Hostile Territory
+        </li>
+
+        <!-- Objectives -->
+        <li>
+          <span class="legend-item rounded" style="background-color: blue"></span>
+          Objective
+        </li>
+        <li>
+          <span class="legend-item rounded" style="background-color: orange"></span>
+          Objective
+        </li>
+        <li>
+          <span class="legend-item rounded" style="background-color: red"></span>
+          Objective
+        </li>
+
+        <!-- Patrol Routes -->
+        <li>
+          <span class="legend-line" style="background-color: blue"></span>
+          Combat Patrol Route
+        </li>
+        <li>
+          <span class="legend-line" style="background-color: orange"></span>
+          Stealth Patrol Route
+        </li>
+        <li>
+          <span class="legend-line" style="background-color: red"></span>
+          Enemy Patrol Route
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      // Initialize Leaflet Map
+      const map = L.map('map', {
+        crs: L.CRS.Simple,
+        zoomControl: false, // Disable zoom control
+      });
+
+      const bounds = [
+        [0, 0],
+        [8000, 8000],
+      ];
+
+      map.scrollWheelZoom.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.boxZoom.disable();
+      map.dragging.disable();
+
+      map.setView([0, 0], 1);
+
+      L.imageOverlay('./everon-map.jpg', bounds).addTo(map);
+      map.fitBounds(bounds);
+      map.setMaxBounds(bounds);
+
+      // create an icon if you want
+      const greenIcon = L.icon({
+        iconUrl: './leaf-green.png',
+        shadowUrl: './leaf-shadow.png',
+
+        iconSize: [38, 95], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62], // the same for the shadow
+        popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+      });
+
+      // add a marker
+      L.marker([2000, 3000], { icon: greenIcon }).addTo(map);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+#h-ruler-container {
+  height: 10px;
+  line-height: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: none;
+}
+#h-ruler {
+  transform-origin: bottom left;
+}
+
+#v-ruler-container {
+  line-height: 0;
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: 10px;
+  z-index: 9998;
+}
+#v-ruler {
+  transform-origin: top right;
+}
+
+#map-container {
+  flex: 1;
+  line-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+#map {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  overflow: unset !important;
+  transform-origin: top left;
+  width: 8000px;
+  height: 8000px;
+}
+
+/* Style for the legend */
+#legend {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  max-width: 250px;
+  padding: 10px;
+  position: fixed;
+  left: 120px;
+  top: 170px;
+  z-index: 1000;
+}
+
+#legend h3 {
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+#legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#legend li {
+  margin-bottom: 8px;
+}
+
+.legend-item,
+.legend-line {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.legend-item {
+  width: 20px;
+  height: 20px;
+}
+
+.legend-item.rounded {
+  border-radius: 50%;
+}
+
+.legend-line {
+  width: 30px;
+  height: 5px;
+}
