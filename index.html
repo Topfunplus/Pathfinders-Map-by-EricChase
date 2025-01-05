@@ -121,8 +121,10 @@
     var marker = L.marker([6460, 6530]).addTo(map);
     marker.setZIndexOffset(10000);  // Set the marker's z-index
 
-    // Bind the popup content and open it immediately
-    marker.bindPopup("<b>FOB</b><br>Pathfinders.").openPopup();  // Pre-open the popup
+    // Bind the popup content and open it immediately with closeOnClick set to false
+    marker.bindPopup("<b>FOB</b><br>Pathfinders.", {
+        closeOnClick: false  // Prevent popup from closing when clicking outside
+    }).openPopup();  // Pre-open the popup
 
 
 
