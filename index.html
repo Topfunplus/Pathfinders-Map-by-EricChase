@@ -119,16 +119,26 @@
 
 var marker = L.marker([6460, 6530]).addTo(map);
 
-// Bind the popup content to the marker without opening it initially
-marker.bindPopup("<b>FOB</b><br>Pathfinders.");
+// Set the z-index for the marker to bring it forward
+marker.setZIndexOffset(10000);
+
+// Bind the popup with a custom z-index
+marker.bindPopup("<b>FOB</b><br>Pathfinders.", {
+    autoClose: false, // Optional: Prevent the popup from closing when clicking outside
+    closeOnClick: false, // Optional: Prevent closing when clicking on the map
+    className: 'custom-popup' // Optional: You can add a custom CSS class
+});
 
 // Add event listener to toggle the popup on click
 marker.on('click', function() {
-    // If the popup is closed, open it, otherwise close it
-    marker.togglePopup();
+    marker.togglePopup();  // Toggle the popup visibility when clicked
 });
 
-
+// Optionally, set a z-index for the popup after binding
+marker.on('popupopen', function() {
+    var popup = marker.getPopup();
+    popup._container.style.zIndex = 10001;  // Adjust the z-index for the popup
+});
 
 
 
