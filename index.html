@@ -131,11 +131,33 @@
 var circle = L.circle([6700, 6440], {
     color: 'blue',
     fillColor: 'blue',
-    fillOpacity: 0.3,
+    fillOpacity: 0.2,
     radius: 650
 }).addTo(map);
 
 
+
+
+
+
+
+
+// HVT for 1/6/24
+var circle = L.circle([3020, 5180], {
+    color: 'red',
+    fillColor: 'red',
+    fillOpacity: 0.2,
+    radius: 600
+}).addTo(map);
+
+// Create the marker for HVT
+    var marker = L.marker([3020, 5180]).addTo(map);
+    marker.setZIndexOffset(10000);  // Set the marker's z-index
+
+    // Bind the popup content and open it immediately with closeOnClick set to false
+    marker.bindPopup("<b>Last known HVT location.</b>", {
+        closeOnClick: false  // Prevent popup from closing when clicking outside
+    }).openPopup();  // Pre-open the popup
 
      
 
