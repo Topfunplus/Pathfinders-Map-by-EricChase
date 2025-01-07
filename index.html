@@ -107,68 +107,16 @@
     map.boxZoom.disable();
     map.dragging.enable(); // Enable dragging
 
-    map.setView([0, 0], 1);
+    map.setView([4000, 4000], 2); // Center the map initially
 
     L.imageOverlay('./everon-map.jpg', bounds).addTo(map);
     map.fitBounds(bounds);
     map.setMaxBounds(bounds);
 
-    // Ensure dragging is enabled
-    map.on('mousedown', function () {
-      map.dragging.enable();
-    });
-
-    // Prevent map from snapping back to previous position
-    map.on('dragstart', function () {
-      map.off('moveend');
-    });
-
-    map.on('dragend', function () {
-      map.on('moveend', function () {
-        map.dragging.enable();
-      });
-    });
-
-    // Prevent gray background from showing when dragging
+    // Prevent map from being dragged outside of bounds
     map.on('drag', function () {
-      const mapPane = map.getPane('mapPane');
-      const mapBounds = map.getBounds();
-      const overlayBounds = L.latLngBounds(bounds);
-      if (!overlayBounds.contains(mapBounds)) {
-        mapPane.style.backgroundColor = 'transparent';
-      } else {
-        mapPane.style.backgroundColor = '';
-      }
+      map.panInsideBounds(bounds, { animate: false });
     });
-
-    // Ensure map does not show gray background when dragging out of bounds
-    map.on('move', function () {
-      const mapPane = map.getPane('mapPane');
-      const mapBounds = map.getBounds();
-      const overlayBounds = L.latLngBounds(bounds);
-      if (!overlayBounds.contains(mapBounds)) {
-        map.setView(map.getCenter(), map.getZoom(), { animate: false });
-      }
-    });
-
-    // Create polygon
-    var polygon = L.polygon([
-      [2630, 594],
-      [7132, 387],
-      [7326, 6800],
-      [300, 7290],
-      [250, 5246]
-    ], {
-      color: 'red',       // Polygon border color
-      fillColor: 'red',    // Polygon fill color
-      fillOpacity: 0.2     // Polygon fill opacity
-    }).addTo(map);
-
-    // Disable mouse events
-    polygon.on('mouseover', function (e) {
-      e.target.off('click mouseover mouseout'); // Disable interaction events
-    });
-
   </script>
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   MARKERS ////////////////////////////////////////////////////////
@@ -206,6 +154,26 @@
       e.target.off('click mouseover mouseout'); // Disable interaction events
     });
 
+
+
+    // Create polygon
+    var polygon = L.polygon([
+      [2630, 594],
+      [7132, 387],
+      [7326, 6800],
+      [300, 7290],
+      [250, 5246]
+    ], {
+      color: 'red',       // Polygon border color
+      fillColor: 'red',    // Polygon fill color
+      fillOpacity: 0.2     // Polygon fill opacity
+    }).addTo(map);
+
+    // Disable mouse events
+    polygon.on('mouseover', function (e) {
+      e.target.off('click mouseover mouseout'); // Disable interaction events
+    });
+
     // Disable text selection for the popup content
     var popupElement = marker.getPopup().getElement();
     if (popupElement) {
@@ -220,11 +188,6 @@
     }
 `;
     document.head.appendChild(style);
-
-
-
-
-
 
 
 
