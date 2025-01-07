@@ -144,7 +144,9 @@ circle.on('mouseover', function (e) {
         closeOnClick: false  // Prevent popup from closing when clicking outside
     }).openPopup();  // Pre-open the popup
 
-
+marker.on('mouseover', function (e) {
+    e.target.off('click mouseover mouseout'); // Disable interaction events
+});
 
 
 
