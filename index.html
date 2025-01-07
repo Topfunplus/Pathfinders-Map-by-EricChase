@@ -132,7 +132,7 @@ var circle = L.circle([1230, 1870], {
 
 
 // Create the marker with z-index and pre-open the popup
-    var marker = L.marker([1230, 18700]).addTo(map);
+    var marker = L.marker([1230, 1870]).addTo(map);
     marker.setZIndexOffset(10000);  // Set the marker's z-index
 
     // Bind the popup content and open it immediately with closeOnClick set to false
@@ -144,19 +144,18 @@ var circle = L.circle([1230, 1870], {
 
 
 
+// Create polygon
 var polygon = L.polygon([
     [2630, 594],
     [7132, 387],
     [7326, 6800],
     [300, 7290],
-    [250, 5246], {
-
- color: 'blue',
-    fillColor: 'red',
-    fillOpacity: 0.2,
-
-]).addTo(map);
-
+    [250, 5246]
+], {
+    color: 'blue',       // Polygon border color
+    fillColor: 'red',    // Polygon fill color
+    fillOpacity: 0.2     // Polygon fill opacity
+}).addTo(map);
 
 
 
