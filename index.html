@@ -117,8 +117,22 @@
 <script>
 
 
+///FIRST COORDINATE IN PAINT IS 2ND COORDINATE HERE. SECOND COORDINATE IN PAINT IS INVERTED AND IS FIRST COORDINATE HERE
+
+
+
+
+// Create circle 
+var circle = L.circle([1230, 1870], {
+    color: 'blue',
+    fillColor: 'blue',
+    fillOpacity: 0.2,
+    radius: 500
+}).addTo(map);
+
+
 // Create the marker with z-index and pre-open the popup
-    var marker = L.marker([6460, 6530]).addTo(map);
+    var marker = L.marker([1230, 18700]).addTo(map);
     marker.setZIndexOffset(10000);  // Set the marker's z-index
 
     // Bind the popup content and open it immediately with closeOnClick set to false
@@ -127,39 +141,11 @@
     }).openPopup();  // Pre-open the popup
 
 
-// Create circle 
-var circle = L.circle([6700, 6440], {
-    color: 'blue',
-    fillColor: 'blue',
-    fillOpacity: 0.2,
-    radius: 650
-}).addTo(map);
 
 
 
 
 
-
-
-
-// HVT for 1/6/24
-var circle = L.circle([4950, 2830], {
-    color: 'red',
-    fillColor: 'red',
-    fillOpacity: 0.2,
-    radius: 600
-}).addTo(map);
-
-// Create the marker for HVT
-    var marker = L.marker([4950, 2830]).addTo(map);
-    marker.setZIndexOffset(10000);  // Set the marker's z-index
-
-    // Bind the popup content and open it immediately with closeOnClick set to false
-    marker.bindPopup("<b>Last known HVT location.</b>", {
-        closeOnClick: false  // Prevent popup from closing when clicking outside
-    }).openPopup();  // Pre-open the popup
-
-     
 
 
 
