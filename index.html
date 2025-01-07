@@ -117,6 +117,16 @@
     map.on('drag', function () {
       map.panInsideBounds(bounds, { animate: false });
     });
+
+    // Fix for flashing issue during drag
+    map.on('movestart', function () {
+      map._stop();
+    });
+
+    // Additional fix for flashing issue
+    map.on('dragstart', function () {
+      map._stop();
+    });
   </script>
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   MARKERS ////////////////////////////////////////////////////////
