@@ -168,7 +168,20 @@ polygon.on('mouseover', function (e) {
     e.target.off('click mouseover mouseout'); // Disable interaction events
 });
 
+// Disable text selection for the popup content
+var popupElement = marker.getPopup().getElement();
+if (popupElement) {
+    popupElement.style.userSelect = 'none';  // Disable text selection
+}
 
+// Optional: Add CSS to ensure no text selection globally
+var style = document.createElement('style');
+style.innerHTML = `
+    .leaflet-popup-content {
+        user-select: none;  /* Disable text selection inside popups */
+    }
+`;
+document.head.appendChild(style);
 
 
 
