@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pathfinders Interactive Map</title>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pathfinders Interactive Map</title>
 
 
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./map.css" />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./map.css" />
 
 
 
@@ -15,173 +16,189 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 
 
-  </head>
-  <body>
-    <div id="body-flex-column">
-      <h1>Pathfinders Interactive Map</h1>
-      <!-- Horizontal Ruler -->
-      <div id="h-ruler-container"><img id="h-ruler" src="./coord-top.jpg" /></div>
-      <!-- Div for the map -->
-      <div id="map-container">
-        <!-- Vertical Ruler -->
-        <div id="v-ruler-container"><img id="v-ruler" src="./coord-left.jpg" /></div>
-        <div id="map"></div>
-      </div>
+</head>
+
+<body>
+  <div id="body-flex-column">
+    <h1>Pathfinders Interactive Map</h1>
+    <!-- Horizontal Ruler -->
+    <div id="h-ruler-container"><img id="h-ruler" src="./coord-top.jpg" /></div>
+    <!-- Div for the map -->
+    <div id="map-container">
+      <!-- Vertical Ruler -->
+      <div id="v-ruler-container"><img id="v-ruler" src="./coord-left.jpg" /></div>
+      <div id="map"></div>
     </div>
-    <div id="legend">
-      <h3>Map Legend</h3>
-      <ul>
-        <!-- Friendly Territory -->
-        <li>
-          <span class="legend-item" style="background-color: blue; opacity: 0.3"></span>
-          Friendly Territory
-        </li>
+  </div>
+  <div id="legend">
+    <h3>Map Legend</h3>
+    <ul>
+      <!-- Friendly Territory -->
+      <li>
+        <span class="legend-item" style="background-color: blue; opacity: 0.3"></span>
+        Friendly Territory
+      </li>
 
-        <!-- Unconfirmed Territory -->
-        <li>
-          <span class="legend-item" style="background-color: grey; opacity: 0.3"></span>
-          Unconfirmed Territory
-        </li>
+      <!-- Unconfirmed Territory -->
+      <li>
+        <span class="legend-item" style="background-color: grey; opacity: 0.3"></span>
+        Unconfirmed Territory
+      </li>
 
-        <!-- Hostile Territory -->
-        <li>
-          <span class="legend-item" style="background-color: red; opacity: 0.3"></span>
-          Hostile Territory
-        </li>
+      <!-- Hostile Territory -->
+      <li>
+        <span class="legend-item" style="background-color: red; opacity: 0.3"></span>
+        Hostile Territory
+      </li>
 
-        <!-- Objectives -->
-        <li>
-          <span class="legend-item rounded" style="background-color: blue"></span>
-          Objective
-        </li>
-        <li>
-          <span class="legend-item rounded" style="background-color: orange"></span>
-          Objective
-        </li>
-        <li>
-          <span class="legend-item rounded" style="background-color: red"></span>
-          Objective
-        </li>
+      <!-- Objectives -->
+      <li>
+        <span class="legend-item rounded" style="background-color: blue"></span>
+        Objective
+      </li>
+      <li>
+        <span class="legend-item rounded" style="background-color: orange"></span>
+        Objective
+      </li>
+      <li>
+        <span class="legend-item rounded" style="background-color: red"></span>
+        Objective
+      </li>
 
-        <!-- Patrol Routes -->
-        <li>
-          <span class="legend-line" style="background-color: blue"></span>
-          Combat Patrol Route
-        </li>
-        <li>
-          <span class="legend-line" style="background-color: orange"></span>
-          Stealth Patrol Route
-        </li>
-        <li>
-          <span class="legend-line" style="background-color: red"></span>
-          Enemy Patrol Route
-        </li>
-      </ul>
-    </div>
+      <!-- Patrol Routes -->
+      <li>
+        <span class="legend-line" style="background-color: blue"></span>
+        Combat Patrol Route
+      </li>
+      <li>
+        <span class="legend-line" style="background-color: orange"></span>
+        Stealth Patrol Route
+      </li>
+      <li>
+        <span class="legend-line" style="background-color: red"></span>
+        Enemy Patrol Route
+      </li>
+    </ul>
+  </div>
 
-    <script>
-      // Initialize Leaflet Map
-      const map = L.map('map', {
-        crs: L.CRS.Simple,
-        zoomControl: false, // Disable zoom control
+  <script>
+    // Initialize Leaflet Map
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      zoomControl: false, // Disable zoom control
+    });
+
+    const bounds = [
+      [0, 0],
+      [8000, 8000],
+    ];
+
+    map.scrollWheelZoom.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.boxZoom.disable();
+    map.dragging.enable(); // Enable dragging
+
+    map.setView([0, 0], 1);
+
+    L.imageOverlay('./everon-map.jpg', bounds).addTo(map);
+    map.fitBounds(bounds);
+    map.setMaxBounds(bounds);
+
+    // Ensure dragging is enabled
+    map.on('mousedown', function () {
+      map.dragging.enable();
+    });
+
+    // Prevent map from snapping back to previous position
+    map.on('dragstart', function () {
+      map.off('moveend');
+    });
+
+    map.on('dragend', function () {
+      map.on('moveend', function () {
+        map.dragging.enable();
       });
-
-      const bounds = [
-        [0, 0],
-        [8000, 8000],
-      ];
-
-      map.scrollWheelZoom.disable();
-      map.touchZoom.disable();
-      map.doubleClickZoom.disable();
-      map.boxZoom.disable();
-      map.dragging.disable();
-
-      map.setView([0, 0], 1);
-
-      L.imageOverlay('./everon-map.jpg', bounds).addTo(map);
-      map.fitBounds(bounds);
-      map.setMaxBounds(bounds);
-</script>
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// MARKERS ////////////////////////////////////////////////////////
-<script>
+    });
+  </script>
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  MARKERS ////////////////////////////////////////////////////////
+  <script>
 
 
-///FIRST COORDINATE IN PAINT IS 2ND COORDINATE HERE. SECOND COORDINATE IN PAINT IS INVERTED AND IS FIRST COORDINATE HERE
+    ///FIRST COORDINATE IN PAINT IS 2ND COORDINATE HERE. SECOND COORDINATE IN PAINT IS INVERTED AND IS FIRST COORDINATE HERE
 
 
 
 
-// Create circle 
-var circle = L.circle([1230, 1870], {
-    color: 'blue',
-    fillColor: 'blue',
-    fillOpacity: 0.2,
-    radius: 500
-}).addTo(map);
+    // Create circle 
+    var circle = L.circle([1230, 1870], {
+      color: 'blue',
+      fillColor: 'blue',
+      fillOpacity: 0.2,
+      radius: 500
+    }).addTo(map);
 
-circle.on('mouseover', function (e) {
-    e.target.off('click mouseover mouseout'); // Disable interaction events
-});
+    circle.on('mouseover', function (e) {
+      e.target.off('click mouseover mouseout'); // Disable interaction events
+    });
 
 
-// Create the marker with z-index and pre-open the popup
+    // Create the marker with z-index and pre-open the popup
     var marker = L.marker([1230, 1870]).addTo(map);
     marker.setZIndexOffset(10000);  // Set the marker's z-index
 
     // Bind the popup content and open it immediately with closeOnClick set to false
     marker.bindPopup("<b>FOB</b><br>Pathfinders.", {
-        closeOnClick: false  // Prevent popup from closing when clicking outside
+      closeOnClick: false  // Prevent popup from closing when clicking outside
     }).openPopup();  // Pre-open the popup
 
-marker.on('mouseover', function (e) {
-    e.target.off('click mouseover mouseout'); // Disable interaction events
-});
+    marker.on('mouseover', function (e) {
+      e.target.off('click mouseover mouseout'); // Disable interaction events
+    });
 
 
 
-// Create polygon
-var polygon = L.polygon([
-    [2630, 594],
-    [7132, 387],
-    [7326, 6800],
-    [300, 7290],
-    [250, 5246]
-], {
-    color: 'red',       // Polygon border color
-    fillColor: 'red',    // Polygon fill color
-    fillOpacity: 0.2     // Polygon fill opacity
-}).addTo(map);
+    // Create polygon
+    var polygon = L.polygon([
+      [2630, 594],
+      [7132, 387],
+      [7326, 6800],
+      [300, 7290],
+      [250, 5246]
+    ], {
+      color: 'red',       // Polygon border color
+      fillColor: 'red',    // Polygon fill color
+      fillOpacity: 0.2     // Polygon fill opacity
+    }).addTo(map);
 
-// Disable mouse events
-polygon.on('mouseover', function (e) {
-    e.target.off('click mouseover mouseout'); // Disable interaction events
-});
+    // Disable mouse events
+    polygon.on('mouseover', function (e) {
+      e.target.off('click mouseover mouseout'); // Disable interaction events
+    });
 
-// Disable text selection for the popup content
-var popupElement = marker.getPopup().getElement();
-if (popupElement) {
-    popupElement.style.userSelect = 'none';  // Disable text selection
-}
+    // Disable text selection for the popup content
+    var popupElement = marker.getPopup().getElement();
+    if (popupElement) {
+      popupElement.style.userSelect = 'none';  // Disable text selection
+    }
 
-// Optional: Add CSS to ensure no text selection globally
-var style = document.createElement('style');
-style.innerHTML = `
+    // Optional: Add CSS to ensure no text selection globally
+    var style = document.createElement('style');
+    style.innerHTML = `
     .leaflet-popup-content {
         user-select: none;  /* Disable text selection inside popups */
     }
 `;
-document.head.appendChild(style);
+    document.head.appendChild(style);
 
 
 
@@ -191,8 +208,10 @@ document.head.appendChild(style);
 
 
 
-</script>
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// MARKERS ////////////////////////////////////////////////////////
-     
-  </body>
+  </script>
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  MARKERS ////////////////////////////////////////////////////////
+
+</body>
+
 </html>
