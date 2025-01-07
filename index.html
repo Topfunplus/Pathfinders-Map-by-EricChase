@@ -128,8 +128,11 @@ var circle = L.circle([1230, 1870], {
     fillColor: 'blue',
     fillOpacity: 0.2,
     radius: 500
- interactive: false   // Make the polygon non-interactive
 }).addTo(map);
+
+circle.on('mouseover', function (e) {
+    e.target.off('click mouseover mouseout'); // Disable interaction events
+});
 
 
 // Create the marker with z-index and pre-open the popup
@@ -156,9 +159,12 @@ var polygon = L.polygon([
     color: 'red',       // Polygon border color
     fillColor: 'red',    // Polygon fill color
     fillOpacity: 0.2     // Polygon fill opacity
- interactive: false   // Make the polygon non-interactive
 }).addTo(map);
 
+// Disable mouse events
+polygon.on('mouseover', function (e) {
+    e.target.off('click mouseover mouseout'); // Disable interaction events
+});
 
 
 
